@@ -1,0 +1,10 @@
+{
+    "serverIP": "192.168.16.103",
+    "friendIP": "192.168.16.102",
+    "serverPort": 3551,
+    "xmppPort": 80,
+    "gameServerPort": 7777,
+    "matchmakerPort": 80,
+    "listenAddress": "0.0.0.0",
+    "description": "Configuración LAN - El servidor escucha en 0.0.0.0 para aceptar conexiones de la red local. El amigo debe redirigir sus peticiones a 192.168.16.103"
+}

@@ -1,7 +1,7 @@
 {
     "moderators": ["discordId", "discordId2"],
   "discord": {
-    "bUseDiscordBot": true,
+    "bUseDiscordBot": false,
     "bot_token": "",
     "bEnableInGamePlayerCount": true
   },
@@ -38,8 +38,10 @@
     },
 
     "//": "to add more gameserver on 'gameServerIP' add ip:port:playlist",
-    "matchmakerIP": "127.0.0.1:80",
-    "gameServerIP": ["127.0.0.1:7777:playlist_defaultsolo"],
+    "matchmakerIP": "192.168.16.103:80",
+    "gameServerIP": ["192.168.16.103:7777:playlist_defaultsolo", "192.168.16.103:7777:playlist_defaultduo"],
+    "serverIP": "192.168.16.103",
+    "allowedIPs": ["192.168.16.103", "192.168.16.102"],
     
     "//": "For 'BattlePassSeason' enter only the number of your season (from 2 to 20)",
     "bEnableBattlepass": false,

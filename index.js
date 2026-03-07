@@ -40,6 +40,13 @@ if (!fs.existsSync("./ClientSettings")) fs.mkdirSync("./ClientSettings");
 global.JWT_SECRET = functions.MakeID();
 
 console.log('Welcome to Reload Backend\n');
+if (config.serverIP) {
+    console.log(`  Server IP  : ${config.serverIP}`);
+    if (config.allowedIPs) {
+        console.log(`  Allowed IPs: ${config.allowedIPs.join(', ')}`);
+    }
+    console.log('');
+}
 
 const tokens = JSON.parse(fs.readFileSync("./tokenManager/tokens.json").toString());
 
@@ -123,7 +130,7 @@ app.get("/unknown", (req, res) => {
 
 let server;
 if (config.bEnableHTTPS) {
-    server = httpsServer.listen(PORT, () => {
+    server = httpsServer.listen(PORT, "0.0.0.0", () => {
         log.backend(`Backend started listening on port ${PORT} (SSL Enabled)`);
         require("./xmpp/xmpp.js");
         if (config.discord.bUseDiscordBot === true) {
@@ -142,7 +149,7 @@ if (config.bEnableHTTPS) {
         }
     });
 } else {
-    server = app.listen(PORT, () => {
+    server = app.listen(PORT, "0.0.0.0", () => {
         log.backend(`Backend started listening on port ${PORT} (SSL Disabled)`);
         require("./xmpp/xmpp.js");
         if (config.discord.bUseDiscordBot === true) {
@@ -187,7 +194,7 @@ if (config.bEnableCalderaService === true) {
             return;
         }
 
-        calderaHttpsServer.listen(config.bCalderaServicePort, () => {
+        calderaHttpsServer.listen(config.bCalderaServicePort, "0.0.0.0", () => {
             log.calderaservice(`Caldera Service started listening on port ${config.bCalderaServicePort} (SSL Enabled)`);
         }).on("error", async (err) => {
             if (err.code === "EADDRINUSE") {
@@ -204,7 +211,7 @@ if (config.bEnableCalderaService === true) {
             return;
         }
 
-        calderaService.listen(config.bCalderaServicePort, () => {
+        calderaService.listen(config.bCalderaServicePort, "0.0.0.0", () => {
             log.calderaservice(`Caldera Service started listening on port ${config.bCalderaServicePort} (SSL Disabled)`);
         }).on("error", async (err) => {
             if (err.code === "EADDRINUSE") {
@@ -233,7 +240,7 @@ if (config.Website.bUseWebsite === true) {
 
     if (config.bEnableHTTPS) {
         const httpsServer = https.createServer(httpsOptions, websiteApp);
-        httpsServer.listen(config.Website.websiteport, () => {
+        httpsServer.listen(config.Website.websiteport, "0.0.0.0", () => {
             log.website(`Website started listening on port ${config.Website.websiteport} (SSL Enabled)`);
         }).on("error", async (err) => {
             if (err.code === "EADDRINUSE") {
@@ -245,7 +252,7 @@ if (config.Website.bUseWebsite === true) {
             }
         });
     } else {
-        websiteApp.listen(config.Website.websiteport, () => {
+        websiteApp.listen(config.Website.websiteport, "0.0.0.0", () => {
             log.website(`Website started listening on port ${config.Website.websiteport} (SSL Disabled)`);
         }).on("error", async (err) => {
             if (err.code === "EADDRINUSE") {
