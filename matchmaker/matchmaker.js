@@ -1,10 +1,18 @@
 const functions = require("../structs/functions.js");
+const fs = require("fs");
+const config = JSON.parse(fs.readFileSync("./Config/config.json").toString());
 
 module.exports = async (ws) => {
     // create hashes
     const ticketId = functions.MakeID().replace(/-/ig, "");
     const matchId = functions.MakeID().replace(/-/ig, "");
     const sessionId = functions.MakeID().replace(/-/ig, "");
+
+    // Parse game server IP and port from config (use first entry)
+    const gameServerEntry = Array.isArray(config.gameServerIP) ? config.gameServerIP[0] : config.gameServerIP;
+    const gameServerParts = gameServerEntry ? gameServerEntry.split(":") : [];
+    const gameServerHost = gameServerParts[0] || "127.0.0.1";
+    const gameServerPort = gameServerParts[1] || "7777";
 
     Connecting();
     await functions.sleep(800);

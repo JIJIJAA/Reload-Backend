@@ -28,11 +28,11 @@ if (config.bEnableHTTPS) {
 if (config.bEnableHTTPS) {
     const httpsServer = https.createServer(httpsOptions, app);
     wss = new WebSocket({ server: httpsServer });
-    httpsServer.listen(port, () => {
+    httpsServer.listen(port, "0.0.0.0", () => {
         log.xmpp(`XMPP and Matchmaker started listening on port ${port} (SSL Enabled)`);
     });
 } else {
-    wss = new WebSocket({ server: app.listen(port) });
+    wss = new WebSocket({ server: app.listen(port, "0.0.0.0") });
     log.xmpp(`XMPP and Matchmaker started listening on port ${port} (SSL Disabled)`);
 }
 
